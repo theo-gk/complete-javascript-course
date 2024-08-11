@@ -143,42 +143,42 @@ setTimeout(() => {
 //     });
 // };
 
-// const getCountryData = function (country) {
-//   // Country 1
-//   fetch(`https://restcountries.eu/rest/v2/name/${country}`)
-//     .then(response => {
-//       console.log(response);
+const getCountryData = function (country) {
+  // Country 1
+  fetch(`https://restcountries.eu/rest/v2/name/${country}`)g
+    .then(response => {
+      console.log(response);
 
-//       if (!response.ok)
-//         throw new Error(`Country not found (${response.status})`);
+      if (!response.ok)
+        throw new Error(`Country not found (${response.status})`);
 
-//       return response.json();
-//     })
-//     .then(data => {
-//       renderCountry(data[0]);
-//       // const neighbour = data[0].borders[0];
-//       const neighbour = 'dfsdfdef';
+      return response.json();
+    })
+    .then(data => {
+      renderCountry(data[0]);
+      // const neighbour = data[0].borders[0];
+      const neighbour = 'dfsdfdef';
 
-//       if (!neighbour) return;
+      if (!neighbour) return;
 
-//       // Country 2
-//       return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
-//     })
-//     .then(response => {
-//       if (!response.ok)
-//         throw new Error(`Country not found (${response.status})`);
+      // Country 2
+      return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
+    })
+    .then(response => {
+      if (!response.ok)
+        throw new Error(`Country not found (${response.status})`);
 
-//       return response.json();
-//     })
-//     .then(data => renderCountry(data, 'neighbour'))
-//     .catch(err => {
-//       console.error(`${err} 💥💥💥`);
-//       renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
-//     })
-//     .finally(() => {
-//       countriesContainer.style.opacity = 1;
-//     });
-// };
+      return response.json();
+    })
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      console.error(`${err} 💥💥💥`);
+      renderError(`Something went wrong 💥💥 ${err.message}. Try again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
 
 const getCountryData = function (country) {
   // Country 1
@@ -242,6 +242,33 @@ TEST COORDINATES 2: -33.933, 18.474
 
 GOOD LUCK 😀
 */
+
+// const whereAmI = function( lat, lng ) {
+//
+//   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json` )
+//       .then(function(response) {
+//         console.log(response);
+//         return response.json();
+//       })
+//       .then(function(data){
+//         console.log(data);
+//
+//         const city = data.city || '';
+//
+//         if ( city.includes("Throttled") ) {
+//           console.log("Throttled");
+//           throw new Error('Throttled! See geocode.xyz/pricing');
+//         }
+//         else {
+//           console.log(`You are in ${city}, ${data.country}`);
+//         }
+//       })
+//       .catch( err => {
+//         console.error(err);
+//       });
+// }
+//
+// whereAmI( 52.508, 13.381 );
 
 /*
 const whereAmI = function (lat, lng) {
@@ -388,21 +415,72 @@ Build the image loading functionality that I just showed you on the screen.
 Tasks are not super-descriptive this time, so that you can figure out some stuff on your own. Pretend you're working on your own 😉
 
 PART 1
-1. Create a function 'createImage' which receives imgPath as an input. This function returns a promise which creates a new image (use document.createElement('img')) and sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. The fulfilled value should be the image element itself. In case there is an error loading the image ('error' event), reject the promise.
+1. Create a function 'createImage' which receives imgPath as an input. This function returns a promise which creates a new image (use document.createElement('img'))
+and sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise.
+The fulfilled value should be the image element itself. In case there is an error loading the image ('error' event), reject the promise.
 
 If this part is too tricky for you, just watch the first part of the solution.
 
 PART 2
 2. Comsume the promise using .then and also add an error handler;
 3. After the image has loaded, pause execution for 2 seconds using the wait function we created earlier;
-4. After the 2 seconds have passed, hide the current image (set display to 'none'), and load a second image (HINT: Use the image element returned by the createImage promise to hide the current image. You will need a global variable for that 😉);
+4. After the 2 seconds have passed, hide the current image (set display to 'none'), and load a second image (HINT: Use the image element returned by the createImage promise
+to hide the current image. You will need a global variable for that 😉);
 5. After the second image has loaded, pause execution for 2 seconds again;
 6. After the 2 seconds have passed, hide the current image.
-
-TEST DATA: Images in the img folder. Test the error handler by passing a wrong image path. Set the network speed to 'Fast 3G' in the dev tools Network tab, otherwise images load too fast.
-
-GOOD LUCK 😀
 */
+
+// let newImgCreated;
+// const imgContainer = document.querySelector('.images');
+//
+// const wait = function (seconds) {
+//   return new Promise(function (resolve) {
+//     setTimeout(resolve, seconds * 1000);
+//   });
+// };
+//
+// const createImage = function( imgPath ) {
+//   return new Promise( function(resolve,reject) {
+//
+//     const imgNode = document.createElement('img');
+//     imgNode.src = imgPath;
+//
+//     imgNode.addEventListener('load', function(){
+//       imgContainer.append( imgNode );
+//       newImgCreated = imgNode;
+//       resolve(newImgCreated);
+//     });
+//
+//     imgNode.addEventListener('error', function () {
+//       reject(new Error('Image not found'));
+//     });
+//   });
+// }
+//
+//
+// createImage("img/img-1.jpg")
+// .then(imgNode => {
+//       console.log(imgNode);
+//       return wait(2);
+//     }
+// )
+// .then(() => {
+//   console.log(newImgCreated);
+//   newImgCreated.style.display = "none";
+//
+//   return createImage("img/img-2.jpg");
+// })
+// .then( secondImg => {
+//   newImgCreated = secondImg;
+//   return wait(2);
+// })
+// .then( ()=> {
+//   newImgCreated.style.display = "none";
+// })
+// .catch(err => {
+//   console.error(err);
+// });
+
 
 /*
 const wait = function (seconds) {
@@ -481,11 +559,7 @@ const whereAmI = async function () {
     const res = await fetch(
       `https://restcountries.eu/rest/v2/name/${dataGeo.country}`
     );
-    
-    // BUG in video:
-    // if (!resGeo.ok) throw new Error('Problem getting country');
-    
-    // FIX:
+
     if (!res.ok) throw new Error('Problem getting country');
 
     const data = await res.json();
@@ -667,6 +741,72 @@ TEST DATA: ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']. To test, turn of
 GOOD LUCK 😀
 */
 
+let newImgCreated;
+const imgContainer = document.querySelector('.images');
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+const createImage = function( imgPath ) {
+  return new Promise( function(resolve,reject) {
+
+    const imgNode = document.createElement('img');
+    imgNode.src = imgPath;
+
+    imgNode.addEventListener('load', function(){
+      imgContainer.append( imgNode );
+      newImgCreated = imgNode;
+      resolve(newImgCreated);
+    });
+
+    imgNode.addEventListener('error', function () {
+      reject(new Error('Image not found'));
+    });
+  });
+}
+
+const loadNPause = async function() {
+  try{
+    const imgNode = await createImage("img/img-1.jpg");
+    await wait(2);
+
+    newImgCreated.style.display = "none";
+
+    newImgCreated = await createImage("img/img-2.jpg");
+    await wait(2);
+    newImgCreated.style.display = "none";
+  }
+  catch(err) {
+    console.error(err);
+    throw err;
+  }
+}
+
+// loadNPause();
+
+const imgArr = ["img/img-1.jpg", "img/img-2.jpg", "img/img-3.jpg"];
+
+const loadAll = async function( imgArr ) {
+
+  try {
+    const imgs = imgArr.map(async img => await createImage(img));
+    const imgsEl = await Promise.all(imgs);
+    console.log(imgsEl)
+
+    imgsEl.forEach( img => {
+      img.classList.add('paralell');
+    })
+  }
+  catch (err) {
+    console.error(err);
+  }
+}
+
+loadAll(imgArr);
+
 /*
 const wait = function (seconds) {
   return new Promise(function (resolve) {
@@ -693,26 +833,6 @@ const createImage = function (imgPath) {
 };
 
 let currentImg;
-
-// createImage('img/img-1.jpg')
-//   .then(img => {
-//     currentImg = img;
-//     console.log('Image 1 loaded');
-//     return wait(2);
-//   })
-//   .then(() => {
-//     currentImg.style.display = 'none';
-//     return createImage('img/img-2.jpg');
-//   })
-//   .then(img => {
-//     currentImg = img;
-//     console.log('Image 2 loaded');
-//     return wait(2);
-//   })
-//   .then(() => {
-//     currentImg.style.display = 'none';
-//   })
-//   .catch(err => console.error(err));
 
 // PART 1
 const loadNPause = async function () {
